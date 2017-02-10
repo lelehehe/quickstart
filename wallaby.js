@@ -48,6 +48,7 @@ module.exports = function (wallaby) {
     debug: true,
 
     setup: function (wallaby) {
+      window.module = { id: 'foo' };
       wallaby.delayStart();
 
       System.config({
