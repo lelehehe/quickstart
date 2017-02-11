@@ -5,7 +5,6 @@
 module.exports = function (wallaby) {
 
   var compilerOptions = require('./src/tsconfig.json').compilerOptions;
-  compilerOptions.module = 'system';
 
   return {
     files: [
@@ -41,6 +40,10 @@ module.exports = function (wallaby) {
 
     testFramework: 'jasmine',
 
+    env: {
+      kind: 'electron'
+    },
+
     compilers: {
       '**/*.ts': wallaby.compilers.typeScript(compilerOptions)
     },
@@ -48,18 +51,11 @@ module.exports = function (wallaby) {
     debug: true,
 
     setup: function (wallaby) {
-      window.module = { id: 'foo' };
       wallaby.delayStart();
 
       System.config({
         transpiler: 'none',
         defaultJSExtensions: true,
-        meta: {
-          'src/app/*': {
-            scriptLoad: true,
-            format: 'register'
-          }
-        },
 
         // Assume npm: is set in `paths` in systemjs.config
         // Map the angular testing umd bundles
