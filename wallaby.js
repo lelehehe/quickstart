@@ -45,10 +45,15 @@ module.exports = function (wallaby) {
       '**/*.ts': wallaby.compilers.typeScript(compilerOptions)
     },
 
+    preprocessors: {
+      '**/*.js': function (file) {
+        return file.content.replace('moduleId: module.id', 'moduleId: __moduleName');
+      }
+    },
+
     debug: true,
 
     setup: function (wallaby) {
-      window.module = { id: 'foo' };
       wallaby.delayStart();
 
       System.config({
